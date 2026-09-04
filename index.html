@@ -31,7 +31,7 @@
         height: 100%;
         margin: 0;
         overflow: hidden;
-        background: var(--bg);
+        background: transparent;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
 
@@ -103,7 +103,9 @@
       .hidden { display: none !important; }
 
       /* AR.js creates its camera canvas underneath the UI. */
-      a-scene { position: fixed !important; inset: 0; }
+      a-scene { position: fixed !important; inset: 0; z-index: 1; background: transparent !important; }
+      .a-canvas { position: fixed !important; inset: 0; z-index: 1 !important; background: transparent !important; }
+      #arjs-video { position: fixed !important; inset: 0; z-index: 0 !important; width: 100% !important; height: 100% !important; object-fit: cover !important; }
       .a-enter-vr, .a-enter-ar { display: none !important; }
     </style>
   </head>
@@ -124,10 +126,10 @@
     <a-scene
       embedded
       loading-screen="dotsColor: #f59e0b; backgroundColor: #0f172a"
-      renderer="logarithmicDepthBuffer: true; colorManagement: true;"
+      renderer="antialias: true; alpha: true; logarithmicDepthBuffer: true; colorManagement: true;"
       vr-mode-ui="enabled: false"
       device-orientation-permission-ui="enabled: false"
-      arjs="sourceType: webcam; trackingMethod: best; detectionMode: mono_and_matrix; matrixCodeType: 3x3; debugUIEnabled: false; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720;"
+      arjs="sourceType: webcam; trackingMethod: best; detectionMode: mono_and_matrix; matrixCodeType: 3x3; debugUIEnabled: false;"
     >
       <a-assets>
     <a-asset-item id="loaf-model" src="https://raw.githubusercontent.com/axdrozen/mis-modelos-ar/main/pretty-sourdough-loaf.glb"></a-asset-item>
@@ -138,9 +140,9 @@
         type="pattern"
         url="qr-marker.patt"
         smooth="true"
-        smoothCount="10"
-        smoothTolerance="0.01"
-        smoothThreshold="5"
+        smoothCount="20"
+        smoothTolerance="0.02"
+        smoothThreshold="10"
       >
         <!-- La escala puede ajustarse si el modelo se imprime en otro tamaño. -->
         <a-entity
@@ -161,6 +163,7 @@
       const status = document.getElementById("status");
       const marker = document.getElementById("qr-marker");
       const model = document.getElementById("loaf");
+      let lostTimer = null;
 
       start.addEventListener("click", () => {
         intro.classList.add("hidden");
@@ -168,10 +171,18 @@
       });
 
       marker.addEventListener("markerFound", () => {
+        if (lostTimer !== null) window.clearTimeout(lostTimer);
+        marker.object3D.visible = true;
         status.textContent = "Modelo detectado sobre el código QR";
       });
 
       marker.addEventListener("markerLost", () => {
+        // Mantiene la última pose unos instantes para evitar el parpadeo cuando
+        // el detector pierde un fotograma por movimiento o poca luz.
+        marker.object3D.visible = true;
+        lostTimer = window.setTimeout(() => {
+          marker.object3D.visible = false;
+        }, 650);
         status.textContent = "Apunta la cámara al código QR…";
       });
 
