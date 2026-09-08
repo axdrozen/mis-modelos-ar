@@ -1,81 +1,11 @@
 <!doctype html>
 <html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#111827" />
-    <title>metro escaneado · Realidad aumentada</title>
-    <meta name="description" content="Modelo 3D metro escaneado en realidad aumentada desde un código QR." />
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.5/aframe/build/aframe-ar.js"></script>
-    <style>
-      :root { color-scheme: dark; --bg: #0f172a; --panel: rgba(15, 23, 42, .90); --text: #f8fafc; --muted: #cbd5e1; --accent: #f59e0b; }
-      * { box-sizing: border-box; }
-      html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: transparent; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-      .ui { position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; padding: 1.25rem; pointer-events: none; }
-      .card { width: min(100%, 31rem); padding: 1.35rem; border: 1px solid rgba(255,255,255,.14); border-radius: 1.25rem; background: var(--panel); box-shadow: 0 1rem 3rem rgba(0,0,0,.35); backdrop-filter: blur(14px); text-align: center; pointer-events: auto; }
-      h1 { margin: 0 0 .55rem; font-size: clamp(1.35rem, 5vw, 2rem); }
-      p { margin: .6rem 0; line-height: 1.45; color: var(--muted); }
-      .hint { font-size: .9rem; }
-      button, a.button { display: inline-flex; align-items: center; justify-content: center; min-height: 2.9rem; margin-top: .85rem; padding: .75rem 1.05rem; border: 0; border-radius: .85rem; background: var(--accent); color: #1f2937; font: inherit; font-weight: 750; text-decoration: none; cursor: pointer; }
-      a.secondary { margin-left: .4rem; background: rgba(255,255,255,.14); color: var(--text); }
-      .status { position: fixed; left: 50%; bottom: max(1rem, env(safe-area-inset-bottom)); z-index: 11; transform: translateX(-50%); width: min(calc(100% - 2rem), 31rem); padding: .7rem .9rem; border-radius: 999px; background: rgba(15,23,42,.82); color: var(--text); font-size: .88rem; text-align: center; pointer-events: none; }
-      .hidden { display: none !important; }
-      a-scene { position: fixed !important; inset: 0; z-index: 1; background: transparent !important; }
-      .a-canvas { position: fixed !important; inset: 0; z-index: 1 !important; background: transparent !important; }
-      #arjs-video { position: fixed !important; inset: 0; z-index: 0 !important; width: 100% !important; height: 100% !important; object-fit: cover !important; }
-      .a-enter-vr, .a-enter-ar { display: none !important; }
-    </style>
-  </head>
-  <body>
-    <div class="ui" id="intro">
-      <section class="card" aria-live="polite">
-        <h1>Realidad aumentada</h1>
-        <p>Después de abrir la página, apunta la cámara al marcador blanco y negro de la tarjeta para fijar <strong>metro escaneado</strong>.</p>
-        <button id="start" type="button">Activar cámara</button>
-        <a class="button secondary" href="viewer.html">Ver en 3D</a>
-        <p class="hint">No necesitas instalar una aplicación. El navegador puede pedir permiso para usar la cámara.</p>
-      </section>
-    </div>
-    <div class="status" id="status">Preparando la experiencia…</div>
-    <a-scene
-      embedded
-      loading-screen="dotsColor: #f59e0b; backgroundColor: #0f172a"
-      renderer="antialias: true; alpha: true; logarithmicDepthBuffer: true; colorManagement: true;"
-      vr-mode-ui="enabled: false"
-      device-orientation-permission-ui="enabled: false"
-      arjs="sourceType: webcam; trackingMethod: best; detectionMode: mono_and_matrix; matrixCodeType: 3x3; debugUIEnabled: false;"
-    >
-      <a-assets>
-        <a-asset-item id="model-file" src="modelo.glb"></a-asset-item>
-      </a-assets>
-      <a-marker id="qr-marker" type="pattern" url="marcador.patt" smooth="true" smoothCount="20" smoothTolerance="0.02" smoothThreshold="10">
-        <a-entity id="model" gltf-model="#model-file" position="0 0.03 0" rotation="0 0 0" scale="40.8496 40.8496 40.8496"></a-entity>
-      </a-marker>
-      <a-entity camera></a-entity>
-    </a-scene>
-    <script>
-      const intro = document.getElementById("intro");
-      const status = document.getElementById("status");
-      const marker = document.getElementById("qr-marker");
-      const model = document.getElementById("model");
-      let lostTimer = null;
-      document.getElementById("start").addEventListener("click", () => {
-        intro.classList.add("hidden");
-        status.textContent = "Apunta la cámara al marcador blanco y negro…";
-      });
-      marker.addEventListener("markerFound", () => {
-        if (lostTimer !== null) window.clearTimeout(lostTimer);
-        marker.object3D.visible = true;
-        status.textContent = "Modelo fijado al marcador";
-      });
-      marker.addEventListener("markerLost", () => {
-        marker.object3D.visible = true;
-        lostTimer = window.setTimeout(() => { marker.object3D.visible = false; }, 650);
-        status.textContent = "Apunta la cámara al marcador blanco y negro…";
-      });
-      model.addEventListener("model-loaded", () => { status.textContent = "Apunta la cámara al marcador blanco y negro…"; });
-      model.addEventListener("model-error", () => { status.textContent = "No se pudo cargar el modelo. Abre la vista 3D para revisar el archivo."; });
-    </script>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="refresh" content="0; url=cube.html">
+  <title>Cubo AR · metro escaneado</title>
+  <script>window.location.replace("cube.html");</script>
+</head>
+<body><p>Abriendo el modo de cubo AR… <a href="cube.html">Continuar</a></p></body>
 </html>
