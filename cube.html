@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Prueba de cubo AR</title>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.5/aframe/build/aframe-ar.js"></script>
+  <style>html,body{margin:0;overflow:hidden;background:transparent;font-family:system-ui;color:white}#help{position:fixed;z-index:5;left:1rem;right:1rem;top:1rem;padding:.8rem 1rem;border-radius:12px;background:#0f172add;text-align:center}a-scene{background:transparent!important}</style>
+</head>
+<body>
+  <div id="help">Apunta a cualquier cara del cubo. El modelo se mostrará al reconocerla.</div>
+  <a-scene embedded renderer="alpha:true;antialias:true;colorManagement:true" vr-mode-ui="enabled:false" device-orientation-permission-ui="enabled:false" arjs="sourceType:webcam;trackingMethod:best;detectionMode:mono;debugUIEnabled:false">
+    <a-assets><a-asset-item id="model" src="https://raw.githubusercontent.com/axdrozen/mis-modelos-ar/main/pretty-sourdough-loaf.glb"></a-asset-item></a-assets>
+    <a-marker type="pattern" url="cara-1.patt" smooth="true" smoothCount="12"><a-entity gltf-model="#model" position="0 0.03 0" scale="10 10 10"></a-entity></a-marker>
+    <a-marker type="pattern" url="cara-2.patt" smooth="true" smoothCount="12"><a-entity gltf-model="#model" position="0 0.03 0" scale="10 10 10"></a-entity></a-marker>
+    <a-marker type="pattern" url="cara-3.patt" smooth="true" smoothCount="12"><a-entity gltf-model="#model" position="0 0.03 0" scale="10 10 10"></a-entity></a-marker>
+    <a-marker type="pattern" url="cara-4.patt" smooth="true" smoothCount="12"><a-entity gltf-model="#model" position="0 0.03 0" scale="10 10 10"></a-entity></a-marker>
+    <a-marker type="pattern" url="cara-5.patt" smooth="true" smoothCount="12"><a-entity gltf-model="#model" position="0 0.03 0" scale="10 10 10"></a-entity></a-marker>
+    <a-marker type="pattern" url="cara-6.patt" smooth="true" smoothCount="12"><a-entity gltf-model="#model" position="0 0.03 0" scale="10 10 10"></a-entity></a-marker>
+    <a-entity camera></a-entity>
+  </a-scene>
+</body>
+</html>
