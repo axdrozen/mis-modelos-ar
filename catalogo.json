@@ -3,5 +3,10 @@
     "name": "Pretty sourdough loaf",
     "url": "https://axdrozen.github.io/mis-modelos-ar/",
     "qr": "qr-marker.png"
+  },
+  {
+    "name": "metro escaneado",
+    "url": "https://axdrozen.github.io/mis-modelos-ar/modelos/metro-escaneado/",
+    "qr": "modelos/metro-escaneado/codigo-qr.png"
   }
 ]
