@@ -115,7 +115,7 @@
       <section class="card" aria-live="polite">
         <h1>Realidad aumentada</h1>
         <p>Después de abrir la página, apunta la cámara al marcador blanco y negro de la tarjeta para fijar el modelo 3D.</p>
-        <button id="start" type="button">Activar cámara</button>
+        <button id="start" type="button">Activar cubo AR</button>
         <a class="button secondary" href="viewer.html">Ver en 3D</a>
         <a class="button secondary" href="cube.html">Probar cubo AR</a>
         <p class="hint">No necesitas instalar una aplicación. El navegador puede pedir permiso para usar la cámara.</p>
@@ -167,8 +167,7 @@
       let lostTimer = null;
 
       start.addEventListener("click", () => {
-        intro.classList.add("hidden");
-        status.textContent = "Apunta la cámara al marcador blanco y negro…";
+        window.location.href = "cube.html";
       });
 
       marker.addEventListener("markerFound", () => {
