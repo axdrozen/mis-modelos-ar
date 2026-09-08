@@ -1,13 +1,13 @@
 # Pretty sourdough loaf · WebAR
 
-Este sitio publica el modelo GLB y usa un marcador basado en el mismo código QR.
+Este sitio publica el modelo GLB. El QR abre la experiencia y un marcador blanco y negro separado fija el modelo con mayor estabilidad.
 
 ## Flujo de uso
 
 1. Escanear el QR con la cámara del teléfono.
 2. Abrir la página segura de GitHub Pages.
 3. Pulsar **Activar cámara** y aceptar el permiso de cámara del navegador.
-4. Apuntar al QR impreso: el modelo aparece anclado sobre el marcador.
+4. Apuntar al marcador blanco y negro de la tarjeta: el modelo aparece anclado sobre él.
 
 La vista `viewer.html` funciona como respaldo para explorar el GLB en 3D y, cuando el teléfono lo permite, abrir sus modos de AR del navegador.
 

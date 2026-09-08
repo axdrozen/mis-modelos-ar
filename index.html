@@ -114,7 +114,7 @@
     <div class="ui" id="intro">
       <section class="card" aria-live="polite">
         <h1>Realidad aumentada</h1>
-        <p>Apunta la cámara al código QR impreso para colocar el modelo 3D sobre él.</p>
+        <p>Después de abrir la página, apunta la cámara al marcador blanco y negro de la tarjeta para fijar el modelo 3D.</p>
         <button id="start" type="button">Activar cámara</button>
         <a class="button secondary" href="viewer.html">Ver en 3D</a>
         <p class="hint">No necesitas instalar una aplicación. El navegador puede pedir permiso para usar la cámara.</p>
@@ -136,9 +136,9 @@
       </a-assets>
 
       <a-marker
-        id="qr-marker"
+        id="simple-marker"
         type="pattern"
-        url="qr-marker.patt"
+        url="simple-marker.patt"
         smooth="true"
         smoothCount="20"
         smoothTolerance="0.02"
@@ -167,13 +167,13 @@
 
       start.addEventListener("click", () => {
         intro.classList.add("hidden");
-        status.textContent = "Apunta la cámara al código QR…";
+        status.textContent = "Apunta la cámara al marcador blanco y negro…";
       });
 
       marker.addEventListener("markerFound", () => {
         if (lostTimer !== null) window.clearTimeout(lostTimer);
         marker.object3D.visible = true;
-        status.textContent = "Modelo detectado sobre el código QR";
+        status.textContent = "Modelo fijado al marcador";
       });
 
       marker.addEventListener("markerLost", () => {
@@ -183,11 +183,11 @@
         lostTimer = window.setTimeout(() => {
           marker.object3D.visible = false;
         }, 650);
-        status.textContent = "Apunta la cámara al código QR…";
+        status.textContent = "Apunta la cámara al marcador blanco y negro…";
       });
 
       model.addEventListener("model-loaded", () => {
-        status.textContent = "Apunta la cámara al código QR…";
+        status.textContent = "Apunta la cámara al marcador blanco y negro…";
       });
 
       model.addEventListener("model-error", () => {
