@@ -76,7 +76,8 @@
     cubeRoot.visible = false;
     scene.add(cubeRoot);
     const modelAnchor = new THREE.Group();
-    modelAnchor.position.set(0, -CUBE_HALF + 0.002, 0);
+    // Este GLB conserva un desfase vertical de origen; se corrige solo aquí.
+    modelAnchor.position.set(0, -CUBE_HALF - 0.035, 0);
     cubeRoot.add(modelAnchor);
     let modelScaleFactor = 1;
     const TOP_FACE_SCALE_FACTOR = 0.78;
