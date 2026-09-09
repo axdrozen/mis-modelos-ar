@@ -38,7 +38,7 @@
   (() => {
     const MODEL_NAME = "Pretty sourdough loaf";
     const MODEL_URL = "pretty-sourdough-loaf.glb";
-    const MODEL_SCALE = Number("1.0026");
+    const MODEL_SCALE = Number("0.8021");
     const TAG_SIZE = 0.054;
     const CUBE_HALF = 0.03;
     const PROCESS_MAX = 960;
@@ -57,7 +57,17 @@
     const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true, powerPreference:"high-performance"});
     renderer.setClearColor(0x000000, 0);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.15;
     const scene = new THREE.Scene();
+    scene.add(new THREE.HemisphereLight(0xffffff, 0x667085, 2.2));
+    const keyLight = new THREE.DirectionalLight(0xffffff, 2.6);
+    keyLight.position.set(1.5, 2.5, 2);
+    scene.add(keyLight);
+    const fillLight = new THREE.DirectionalLight(0x9db7ff, 1.4);
+    fillLight.position.set(-2, 1, -1.5);
+    scene.add(fillLight);
     const camera = new THREE.Camera();
     camera.matrixAutoUpdate = false;
     scene.add(camera);
@@ -66,7 +76,7 @@
     cubeRoot.visible = false;
     scene.add(cubeRoot);
     const modelAnchor = new THREE.Group();
-    modelAnchor.position.set(0, CUBE_HALF + 0.004, 0);
+    modelAnchor.position.set(0, CUBE_HALF + 0.055, 0);
     cubeRoot.add(modelAnchor);
 
     let stream = null;
@@ -339,6 +349,16 @@
     window.addEventListener("resize", () => updateProjection(video.videoWidth, video.videoHeight));
     new THREE.GLTFLoader().load(MODEL_URL, gltf => {
       gltf.scene.scale.setScalar(MODEL_SCALE);
+      gltf.scene.traverse(node => {
+        if (!node.isMesh) return;
+        node.frustumCulled = false;
+        const materials = Array.isArray(node.material) ? node.material : [node.material];
+        materials.filter(Boolean).forEach(material => {
+          if (material.map) material.map.encoding = THREE.sRGBEncoding;
+          if (material.emissiveMap) material.emissiveMap.encoding = THREE.sRGBEncoding;
+          material.needsUpdate = true;
+        });
+      });
       modelAnchor.add(gltf.scene);
       setStatus("Modelo listo. Pulsa «Activar cámara».", `Modelo: ${MODEL_NAME}`);
     }, undefined, error => {
