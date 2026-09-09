@@ -349,6 +349,8 @@
     window.addEventListener("resize", () => updateProjection(video.videoWidth, video.videoHeight));
     new THREE.GLTFLoader().load(MODEL_URL, gltf => {
       gltf.scene.scale.setScalar(MODEL_SCALE);
+      const modelBounds = new THREE.Box3().setFromObject(gltf.scene);
+      if (Number.isFinite(modelBounds.min.y)) gltf.scene.position.y -= modelBounds.min.y;
       gltf.scene.traverse(node => {
         if (!node.isMesh) return;
         node.frustumCulled = false;
