@@ -13,5 +13,10 @@
     "name": "metro escaneado",
     "url": "https://axdrozen.github.io/mis-modelos-ar/modelos/metro-escaneado-2/",
     "qr": "modelos/metro-escaneado-2/codigo-qr.png"
+  },
+  {
+    "name": "Dino_peluche_fotogrametria_realista",
+    "url": "https://axdrozen.github.io/mis-modelos-ar/modelos/dino-peluche-fotogrametria-realista/",
+    "qr": "modelos/dino-peluche-fotogrametria-realista/codigo-qr.png"
   }
 ]
