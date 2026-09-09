@@ -78,6 +78,16 @@
     const modelAnchor = new THREE.Group();
     modelAnchor.position.set(0, -CUBE_HALF + 0.002, 0);
     cubeRoot.add(modelAnchor);
+    let modelScaleFactor = 1;
+    const TOP_FACE_SCALE_FACTOR = 0.78;
+
+    function updateModelScale(candidates) {
+      // Solo este modelo necesita una compensación en la vista superior.
+      const topFaceOnly = candidates.length === 1 && candidates[0].id === 4;
+      const target = topFaceOnly ? TOP_FACE_SCALE_FACTOR : 1;
+      modelScaleFactor += (target - modelScaleFactor) * 0.18;
+      modelAnchor.scale.setScalar(modelScaleFactor);
+    }
 
     let stream = null;
     let detector = null;
@@ -234,6 +244,7 @@
 
     function handleDetections(detections) {
       const candidates = (detections || []).map(candidateFromDetection).filter(Boolean);
+      updateModelScale(candidates);
       const fused = fuseCandidates(candidates);
       if (fused) {
         applyPose(fused, candidates.length);
